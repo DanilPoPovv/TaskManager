@@ -6,5 +6,6 @@ namespace WebApplication1.Services
     public interface IUserService
     {
         Task<UserView> Register(RegisterRequest request);
+        Task<AuthorizeView> Login(LoginRequest request);
     }
 }

@@ -12,12 +12,19 @@ namespace WebApplication1.Controllers
         {
             _userService = userService;
         }
-        [Route("Register")]
         [HttpPost]
+        [Route("Register")]
         public async Task<IActionResult> Register(RegisterRequest request)
         {
             var userView = await _userService.Register(request);
             return Ok(userView);
+        }
+        [HttpPost]
+        [Route("Login")]
+        public async Task<IActionResult> Login(LoginRequest request)
+        {
+            var authView = await _userService.Login(request);
+            return Ok(authView);
         }
     }
 }
