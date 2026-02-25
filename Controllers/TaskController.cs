@@ -1,6 +1,9 @@
-﻿namespace WebApplication1.Controllers
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace WebApplication1.Controllers
 {
-    public class TaskController
+    [ApiController]
+    public class TaskController : ControllerBase 
     {
     }
 }
