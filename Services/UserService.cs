@@ -44,6 +44,22 @@ namespace WebApplication1.Services
             return new AuthorizeView() { Token = token };
 
         }
+        public async Task<bool> DeleteUser(DeleteUserRequest request)
+        {
+            var result = await DeleteUserFromDatabase(request.UserId);
+            return result;
+        }
+        private async Task<bool> DeleteUserFromDatabase(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+                throw new Exception("User not found");
+
+            var result = await _userManager.DeleteAsync(user);
+            if (!result.Succeeded)
+                throw new Exception(string.Join("; ", result.Errors.Select(e => e.Description)));
+            return result.Succeeded;
+        }
         private async Task<bool> CheckUserNameRegistered(string UserName)
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == UserName);

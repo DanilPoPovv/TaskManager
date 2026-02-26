@@ -19,11 +19,12 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost("Add")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,User")]
         public async Task<TaskAddView> AddTask(AddTaskRequest request)
         {
             var task = await taskService.AddTask(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value!,request);
             return task;
         }
+        
     }
 }

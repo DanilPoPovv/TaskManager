@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Requests;
 using WebApplication1.Services;
 
@@ -25,6 +26,13 @@ namespace WebApplication1.Controllers
         {
             var authView = await _userService.Login(request);
             return Ok(authView);
+        }
+        [HttpDelete]
+        [Route("Delete")]
+        public async Task<IActionResult> Delete(DeleteUserRequest request)
+        {
+            var result = await _userService.DeleteUser(request);
+            return Ok(result);
         }
     }
 }
