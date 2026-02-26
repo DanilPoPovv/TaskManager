@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using WebApplication1.Requests;
 using WebApplication1.Services;
 
@@ -33,6 +34,14 @@ namespace WebApplication1.Controllers
         {
             var result = await _userService.DeleteUser(request);
             return Ok(result);
+        }
+        [HttpPut]
+        [Route("Update")]
+        [Authorize(Roles = "User,Admin")]
+        public async Task<UserView> Update(UserUpdateRequest request)
+        {
+            var user = await _userService.Update(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value!, request);
+            return new UserView(user);
         }
     }
 }

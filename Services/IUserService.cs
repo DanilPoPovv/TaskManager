@@ -8,5 +8,6 @@ namespace WebApplication1.Services
         Task<UserView> Register(RegisterRequest request);
         Task<AuthorizeView> Login(LoginRequest request);
         Task<bool> DeleteUser(DeleteUserRequest request);
+        Task<User> Update(string userId, UserUpdateRequest request);
     }
 }

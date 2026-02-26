@@ -37,7 +37,7 @@ namespace WebApplication1.Services
             var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
             if (!result.Succeeded)
                 throw new Exception("Incorrect password");
-            
+
             var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
             var token = _jwtTokenGenerator.GenerateJwtToken(user, role);
 
@@ -48,6 +48,16 @@ namespace WebApplication1.Services
         {
             var result = await DeleteUserFromDatabase(request.UserId);
             return result;
+        }
+
+        public async Task<User> Update(string userId, UserUpdateRequest request)
+        {
+            var user = await GetUserDatabase(userId);
+            user = UpdateUserFields(user, request);
+            if (!string.IsNullOrEmpty(request.NewPassword))
+                await UpdateUserPassword(user, request.NewPassword, request.OldPassword);
+            await _userManager.UpdateAsync(user);
+            return user;
         }
         private async Task<bool> DeleteUserFromDatabase(string id)
         {
@@ -75,6 +85,25 @@ namespace WebApplication1.Services
             }
             await _userManager.AddToRoleAsync(user, request.IsUserAdmin ? "Admin" : "User");
             return user;
+        }
+        private async Task<User> GetUserDatabase(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                throw new Exception("User not found");
+            return user;
+        }
+        private User UpdateUserFields(User user, UserUpdateRequest request)
+        {
+            user.UserName = request.Name ?? user.UserName;
+            user.SecondName = request.SecondName ?? user.SecondName;
+            return user;
+        }
+        private async Task UpdateUserPassword(User user, string oldPassword, string newPassword)
+        {
+            var result = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+            if (!result.Succeeded)
+                throw new Exception(string.Join(';', result.Errors.Select(x => x.Description)));
         }
     }
 }
