@@ -6,5 +6,6 @@ namespace WebApplication1.Services
     public interface ITaskService
     {
         public Task<TaskAddView> AddTask(string userId, AddTaskRequest request);
+        //TODO public Task<bool> DeleteTask(string UserId, string TaskName);
     }
 }

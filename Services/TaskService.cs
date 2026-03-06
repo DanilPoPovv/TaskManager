@@ -16,6 +16,7 @@ namespace WebApplication1.Services
 
         public async Task<TaskAddView> AddTask(string userId, AddTaskRequest request)
         {
+            ///TODO : Divide logic to private methods
             var user = await dbContext.Users.Include(x => x.Tasks).FirstOrDefaultAsync(x => x.Id == userId);
             if (user == null)
                 throw new Exception("Your claims is invalid");
@@ -26,6 +27,11 @@ namespace WebApplication1.Services
             await dbContext.SaveChangesAsync();
             return new TaskAddView(task);
         }
-        
+
+        //public Task<bool> DeleteTask(string UserId, string TaskName)
+        //{
+            
+        //}
+
     }
 }
