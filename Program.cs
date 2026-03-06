@@ -26,7 +26,6 @@ builder.Services
     .AddMutationType<Mutation>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<IUserService,UserService>();
-builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<JwtTokenGenerator>();
 builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<UserHelper>();

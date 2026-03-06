@@ -64,6 +64,10 @@ namespace WebApplication1.Services
             await _userManager.UpdateAsync(user);
             return user;
         }
+        public async Task<List<User>> GetAllUsers()
+        {
+            return await _userHelper.GetAllUsers();
+        }
         private async Task<bool> DeleteUserFromDatabase(string id)
         {
             var user = await _userManager.FindByIdAsync(id);

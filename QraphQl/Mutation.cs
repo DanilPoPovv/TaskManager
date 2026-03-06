@@ -5,11 +5,11 @@ namespace WebApplication1.QraphQl
 {
     public class Mutation 
     {
-        public async Task<User> UpdateUser(string userId, UserUpdateRequest request,[Service] UserService userService)
+        public async Task<User> UpdateUser(string userId, UserUpdateRequest request,[Service] IUserService userService)
         {
             return await userService.Update(userId,request);
         }
-        public async Task<UserView> Register(RegisterRequest request, [Service] UserService userService)
+        public async Task<UserView> Register(RegisterRequest request, [Service] IUserService userService)
         {
             return await userService.Register(request);
         }

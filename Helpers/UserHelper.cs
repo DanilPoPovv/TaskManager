@@ -26,5 +26,9 @@ namespace WebApplication1.Helpers
                 throw new Exception("User not found");
             return user;
         }
+        public async Task<List<User>> GetAllUsers()
+        {
+            return await _userManager.Users.ToListAsync();
+        }
     }
 }
