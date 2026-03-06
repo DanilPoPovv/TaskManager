@@ -23,7 +23,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services
     .AddGraphQLServer()
     .AddQueryType<Query>()
-    .AddMutationType<Mutation>();
+    .AddMutationType<Mutation>()
+    .AddProjections()
+    .AddFiltering()
+    .AddSorting();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<IUserService,UserService>();
 builder.Services.AddScoped<JwtTokenGenerator>();
