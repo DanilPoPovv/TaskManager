@@ -16,7 +16,7 @@ namespace WebApplication1.Services
 
         public async Task<TaskAddView> AddTask(string userId, AddTaskRequest request)
         {
-            var user = await dbContext.Users.Include(x => x.Tasks).FirstOrDefaultAsync(x => x.Id == userId);
+            var user = await dbContext.AspNetUsers.Include(x => x.Tasks).FirstOrDefaultAsync(x => x.Id == userId);
             if (user == null)
                 throw new Exception("Your claims is invalid");
             if (user.Tasks.Any(x => x.Name == request.Name))

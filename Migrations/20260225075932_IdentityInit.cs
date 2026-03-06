@@ -16,10 +16,10 @@ namespace WebApplication1.Migrations
 
             migrationBuilder.DropPrimaryKey(
                 name: "PK_Users",
-                table: "Users");
+                table: "AspNetUsers");
 
             migrationBuilder.RenameTable(
-                name: "Users",
+                name: "AspNetUsers",
                 newName: "AspNetUsers");
 
             migrationBuilder.AlterColumn<string>(
@@ -274,11 +274,11 @@ namespace WebApplication1.Migrations
 
             migrationBuilder.RenameTable(
                 name: "AspNetUsers",
-                newName: "Users");
+                newName: "AspNetUsers");
 
             migrationBuilder.AlterColumn<string>(
                 name: "UserName",
-                table: "Users",
+                table: "AspNetUsers",
                 type: "nvarchar(max)",
                 nullable: true,
                 oldClrType: typeof(string),
@@ -288,7 +288,7 @@ namespace WebApplication1.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "NormalizedUserName",
-                table: "Users",
+                table: "AspNetUsers",
                 type: "nvarchar(max)",
                 nullable: true,
                 oldClrType: typeof(string),
@@ -298,7 +298,7 @@ namespace WebApplication1.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "NormalizedEmail",
-                table: "Users",
+                table: "AspNetUsers",
                 type: "nvarchar(max)",
                 nullable: true,
                 oldClrType: typeof(string),
@@ -308,7 +308,7 @@ namespace WebApplication1.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "Email",
-                table: "Users",
+                table: "AspNetUsers",
                 type: "nvarchar(max)",
                 nullable: true,
                 oldClrType: typeof(string),
@@ -318,14 +318,14 @@ namespace WebApplication1.Migrations
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Users",
-                table: "Users",
+                table: "AspNetUsers",
                 column: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Tasks_Users_UserId",
                 table: "Tasks",
                 column: "UserId",
-                principalTable: "Users",
+                principalTable: "AspNetUsers",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }

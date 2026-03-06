@@ -7,7 +7,7 @@ namespace WebApplication1.EntityFramework
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<User> AspNetUsers { get; set; }
         public DbSet<AppTask> Tasks { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

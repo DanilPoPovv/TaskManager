@@ -24,6 +24,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<IUserService,UserService>();
 builder.Services.AddScoped<JwtTokenGenerator>();
 builder.Services.AddScoped<ITaskService, TaskService>();
+builder.Services.AddScoped<AppDbContext>();
 builder.AddSwaggerJwtBearer();
 builder.Services.AddControllers(options =>
 {
