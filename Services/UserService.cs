@@ -14,13 +14,13 @@ namespace WebApplication1.Services
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly JwtTokenGenerator _jwtTokenGenerator;
-        private readonly UserHelper _userHelper;
-        public UserService(UserManager<User> UserManager, SignInManager<User> signInManager, JwtTokenGenerator jwtTokenGen, UserHelper userHelper)
+        private readonly IUserProvider _userProvider;
+        public UserService(UserManager<User> UserManager, SignInManager<User> signInManager, JwtTokenGenerator jwtTokenGen, IUserProvider userHelper)
         {
             _userManager = UserManager;
             _signInManager = signInManager;
             _jwtTokenGenerator = jwtTokenGen;
-            _userHelper = userHelper;
+            _userProvider = userHelper;
         }
         public async Task<UserView> Register(RegisterRequest request)
         {
@@ -34,7 +34,7 @@ namespace WebApplication1.Services
         }
         public async Task<AuthorizeView> Login(LoginRequest request)
         {
-            var user = await _userHelper.GetByNameOrThrow(request.UserName);
+            var user = await _userProvider.GetByNameOrThrow(request.UserName);
             if (user == null)
                 throw new Exception($"No users with Name - \"{request.UserName}\" in system");
             var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
@@ -57,7 +57,7 @@ namespace WebApplication1.Services
 
         public async Task<User> Update(string userId, UserUpdateRequest request)
         {
-            var user = await _userHelper.GetByIdOrThrow(userId);
+            var user = await _userProvider.GetByIdOrThrow(userId);
             user = UpdateUserFields(user, request);
             if (!string.IsNullOrEmpty(request.NewPassword))
                 await UpdateUserPassword(user, request.OldPassword, request.NewPassword);
@@ -66,7 +66,7 @@ namespace WebApplication1.Services
         }
         public async Task<List<User>> GetAllUsers()
         {
-            return await _userHelper.GetAllUsers();
+            return await _userProvider.GetAll();
         }
         private async Task<bool> DeleteUserFromDatabase(string id)
         {
@@ -95,13 +95,6 @@ namespace WebApplication1.Services
             await _userManager.AddToRoleAsync(user, request.IsUserAdmin ? "Admin" : "User");
             return user;
         }
-        //private async Task<User> GetUserDatabase(string userId)
-        //{
-        //    var user = await _userManager.FindByIdAsync(userId);
-        //    if (user == null)
-        //        throw new Exception("User not found");
-        //    return user;
-        //}
         private User UpdateUserFields(User user, UserUpdateRequest request)
         {
             user.UserName = request.Name ?? user.UserName;
